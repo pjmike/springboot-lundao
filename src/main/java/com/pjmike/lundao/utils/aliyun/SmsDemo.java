@@ -10,6 +10,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.pjmike.lundao.utils.redis.RedisOperator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -24,38 +25,32 @@ import java.util.Date;
  */
 @Component
 public class SmsDemo {
-    private static String signName;
-    private static String templateCode;
+    private static String signName = "稷下社区";
+    private static String templateCode = "SMS_135042063";
 
-    private static RedisOperator redisOperator = new RedisOperator();
-
-    @Value("${aliyun.sms.signName}")
-    public  void setSignName(String signName) {
-        SmsDemo.signName = signName;
+    private static RedisOperator redisOperator;
+    @Autowired
+    public SmsDemo(RedisOperator redisOperator) {
+        SmsDemo.redisOperator = redisOperator;
     }
-
-    @Value("${aliyun.sms.templateCode}")
-    public  void setTemplateCode(String templateCode) {
-        SmsDemo.templateCode = templateCode;
-    }
-
     //产品名称:云通信短信API产品,开发者无需替换
     static final String product = "Dysmsapi";
     //产品域名,开发者无需替换
     static final String domain = "dysmsapi.aliyuncs.com";
 
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "LTAIGa0zKOClR57e";
-    static final String accessKeySecret = "4tNkrQFkzZR4bhWYQZtmAvXRaK7zYb";
+    static final String ACCESSKEYID = "LTAIGa0zKOClR57e";
+    static final String ACCESSKEYSECRET = "4tNkrQFkzZR4bhWYQZtmAvXRaK7zYb";
 
     public static SendSmsResponse sendSms(String phone) throws ClientException {
+        System.out.println(signName);
         int randCode = (int) ((Math.random() * 9 + 1) * 100000);
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 
         //初始化acsClient,暂不支持region化
-        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
+        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", ACCESSKEYID, ACCESSKEYSECRET);
         DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
         IAcsClient acsClient = new DefaultAcsClient(profile);
 
@@ -70,6 +65,7 @@ public class SmsDemo {
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
         String code = "{\"code\":\"" + randCode + "\"}";
         long timeout = 300L;
+        System.out.println(code);
         redisOperator.set(phone,String.valueOf(randCode),timeout);
         request.setTemplateParam(code);
 
@@ -92,7 +88,7 @@ public class SmsDemo {
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 
         //初始化acsClient,暂不支持region化
-        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
+        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", ACCESSKEYID, ACCESSKEYSECRET);
         DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
         IAcsClient acsClient = new DefaultAcsClient(profile);
 

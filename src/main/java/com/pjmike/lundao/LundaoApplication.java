@@ -7,7 +7,6 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @MapperScan("com.pjmike.lundao.dao")
-@ComponentScan("com.pjmike.lundao")
 public class LundaoApplication {
 
 	public static void main(String[] args) {

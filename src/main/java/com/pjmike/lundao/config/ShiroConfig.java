@@ -27,7 +27,7 @@ public class ShiroConfig {
         filterChainDefinition.put("/static/**", "anon");
         //配置退出操作
         filterChainDefinition.put("/logout", "logout");
-        filterChainDefinition.put("/**", "authc");
+        filterChainDefinition.put("/**", "anon");
         //如果不设置默认会自动寻找web工程根目录下的login.jsp
         shiroFilterFactoryBean.setLoginUrl("/login");
         //登录成功跳转链接

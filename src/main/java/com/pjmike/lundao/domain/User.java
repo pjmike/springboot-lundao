@@ -1,7 +1,11 @@
 package com.pjmike.lundao.domain;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 public class User {
     /**
@@ -13,6 +17,8 @@ public class User {
     /**
      * 手机号
      */
+    @NotBlank(message = "手机号不能为空")
+    @Pattern(regexp = "^1(3|4|5|7|8)\\d{9}$",message = "手机号码格式错误")
     private String phone;
 
     /**
@@ -23,6 +29,7 @@ public class User {
     /**
      * 密码
      */
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     /**
@@ -142,5 +149,10 @@ public class User {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }

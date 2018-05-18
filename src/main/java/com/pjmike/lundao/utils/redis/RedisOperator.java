@@ -18,8 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisOperator {
 
 	@Autowired
-	private RedisTemplate redisTemplate;
-	
+	private RedisTemplate<String, Object> redisTemplate;
 
 	/**
 	 * 实现命令：TTL key，以秒为单位，返回给定 key的剩余生存时间(TTL, time to live)。

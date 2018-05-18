@@ -12,11 +12,14 @@
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
-  <select id="seleteOneById" parameterType="Integer" resultType="user">
+  <select id="selectOneById" parameterType="Integer" resultType="user">
     SELECT id,phone,username FROM user WHERE id = #{id}
   </select>
   <select id="selectOneByPhone" parameterType="String" resultType="user">
     SELECT id,phone,username FROM user WHERE id = #{value}
+  </select>
+  <select id="selectOneByUserName" parameterType="String" resultType="user">
+    SELECT id,phone,username FROM user WHERE username = #{value}
   </select>
 
 </mapper>

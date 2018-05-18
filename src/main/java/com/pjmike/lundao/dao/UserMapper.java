@@ -10,4 +10,7 @@ public interface UserMapper extends MyMapper<User> {
     User selectOneById(Integer id);
 
     User selectOneByPhone(String phone);
+
+    User selectOneByUserName(String username);
+
 }

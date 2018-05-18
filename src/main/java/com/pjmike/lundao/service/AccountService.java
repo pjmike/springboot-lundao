@@ -1,6 +1,7 @@
 package com.pjmike.lundao.service;
 
 import com.pjmike.lundao.domain.User;
+import com.pjmike.lundao.domain.vo.Account;
 
 /**
  * @author pjmike
@@ -10,18 +11,18 @@ public interface AccountService {
     /**
      * 载入用户信息
      *
-     * @param id
+     * @param phone
      * @return
      */
-    User loadAccount(Integer id);
+    User loadAccount(String phone);
 
     /**
      * 用户是否已被注册
      *
-     * @param phone
+     * @param username
      * @return
      */
-    boolean isAccountExistByUid(String phone);
+    boolean isAccountExistByUserName(String username);
 
     /**
      * 注册用户
@@ -29,7 +30,7 @@ public interface AccountService {
      * @param account
      * @return
      */
-    boolean registerAccount(User account);
+    boolean registerAccount(Account account);
 
 
 }
