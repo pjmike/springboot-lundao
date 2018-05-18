@@ -20,8 +20,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean isAccountExistByUid(Integer id) {
-        User user = userMapper.seleteOneById(id);
+    public boolean isAccountExistByUid(String phone) {
+        User user = userMapper.selectOneByPhone(phone);
         return user != null ? Boolean.TRUE : Boolean.FALSE;
     }
 

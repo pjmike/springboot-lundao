@@ -7,5 +7,7 @@ import com.pjmike.lundao.utils.MyMapper;
  * @author pjmike
  */
 public interface UserMapper extends MyMapper<User> {
-    User seleteOneById(Integer id);
+    User selectOneById(Integer id);
+
+    User selectOneByPhone(String phone);
 }

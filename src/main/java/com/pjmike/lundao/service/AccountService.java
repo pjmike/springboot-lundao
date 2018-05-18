@@ -18,10 +18,10 @@ public interface AccountService {
     /**
      * 用户是否已被注册
      *
-     * @param id
+     * @param phone
      * @return
      */
-    boolean isAccountExistByUid(Integer id);
+    boolean isAccountExistByUid(String phone);
 
     /**
      * 注册用户
