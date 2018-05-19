@@ -17,13 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
@@ -38,8 +34,8 @@ import java.util.Objects;
 public class AccountController {
     @Autowired
     private AccountService accountService;
-
-    private static RedisOperator redisOperator = new RedisOperator();
+    @Autowired
+    private RedisOperator redisOperator;
     /**
      * 注册
      *
@@ -47,7 +43,7 @@ public class AccountController {
      * @return
      */
     @PostMapping("/sign_up")
-    public Result accountRegister(@Valid @RequestBody Account account) {
+    public Result accountRegister(@Validated({Account.group1.class}) @RequestBody Account account) {
         String codeValue = redisOperator.get(account.getPhone());
         if (codeValue == null) {
             return ResultUtils.error("验证码无效或已过期，请重新发送验证码");
@@ -72,14 +68,14 @@ public class AccountController {
      * @return
      */
     @PostMapping("/sign_in")
-    public Result accountLogin(@RequestBody @Valid Account account, HttpServletResponse response) throws UnsupportedEncodingException {
+    public Result accountLogin(@RequestBody Account account, HttpServletResponse response) throws UnsupportedEncodingException {
         User user = accountService.loadAccount(account.getPhone());
         if (user == null) {
-            throw new ServiceException("账号不存在");
+            throw new ServiceException("手机号不存在,请重新注册");
         }
         String pwd = MD5Util.getMD5(account.getPassword(), user.getSalt());
-        if (!StringUtils.equals(pwd, account.getPassword())) {
-            throw new ServiceException("密码错误");
+        if (!StringUtils.equals(pwd,user.getPassword())) {
+            throw new ServiceException("密码错误,请重新输入");
         }
         String token = JwtToken.createToken(user.getId());
         // 时间以秒计算,token有效刷新时间是token有效过期时间的2倍
@@ -101,5 +97,15 @@ public class AccountController {
             return ResultUtils.error("短信发送失败");
         }
         return ResultUtils.success();
+    }
+
+    @GetMapping("/unAuthorized")
+    public Result unauthorized() {
+        return ResultUtils.error("用户未登陆/身份信息过期,请重新登录");
+    }
+
+    @GetMapping("/index")
+    public String index() {
+        return "index";
     }
 }

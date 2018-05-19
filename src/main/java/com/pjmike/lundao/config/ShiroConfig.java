@@ -7,6 +7,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,20 +22,25 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        //配置拦截器
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
+        filterMap.put("authc", new com.pjmike.lundao.utils.shiro.Filter());
+        //配置拦截器规则
         Map<String, String> filterChainDefinition = new LinkedHashMap<>();
         //配置被拦截的连接，顺序判断
         filterChainDefinition.put("/static/**", "anon");
         //配置退出操作
         filterChainDefinition.put("/logout", "logout");
-        filterChainDefinition.put("/**", "anon");
+        filterChainDefinition.put("/sign_in", "anon");
+        filterChainDefinition.put("/sign_up", "anon");
+        filterChainDefinition.put("/index", "authc");
         //如果不设置默认会自动寻找web工程根目录下的login.jsp
-        shiroFilterFactoryBean.setLoginUrl("/login");
+//        shiroFilterFactoryBean.setLoginUrl("/unAuthorized");
         //登录成功跳转链接
-        shiroFilterFactoryBean.setSuccessUrl("/index");
+//        shiroFilterFactoryBean.setSuccessUrl("/index");
         //未授权界面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/unAuthorized");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinition);
+        shiroFilterFactoryBean.setFilters(filterMap);
         return shiroFilterFactoryBean;
     }
 
@@ -48,11 +54,11 @@ public class ShiroConfig {
     @Bean
     public MyShiroRealm myShiroRealm() {
         MyShiroRealm myShiroRealm = new MyShiroRealm();
-        myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+//        myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return myShiroRealm;
     }
 
-    @Bean
+//    @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         //散列算法，这里使用MD5算法

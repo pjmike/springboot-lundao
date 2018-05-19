@@ -5,6 +5,8 @@ import com.auth0.jwt.interfaces.Claim;
 import com.pjmike.lundao.exception.ObjectException;
 import com.pjmike.lundao.service.UserService;
 import com.pjmike.lundao.utils.jwt.JwtToken;
+import com.pjmike.lundao.utils.redis.RedisOperator;
+import com.pjmike.lundao.utils.shiro.JwtTokenShiro;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -27,9 +29,11 @@ import java.util.Map;
 public class MyShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisOperator redisOperator;
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof JwtToken;
+        return token instanceof JwtTokenShiro;
     }
 
     @Override
@@ -52,9 +56,6 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         Map<String, Claim> map = null;
         try {
-            if (JwtToken.verifyTokenTime(token)) {
-                throw new ObjectException("身份认证过期,请重新登录");
-            }
             map = JwtToken.verifyToken(token);
         } catch (UnsupportedEncodingException e) {
             log.info("JWT验证失败: ",e.getMessage());

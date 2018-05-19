@@ -16,10 +16,10 @@
     SELECT id,phone,username FROM user WHERE id = #{id}
   </select>
   <select id="selectOneByPhone" parameterType="String" resultType="user">
-    SELECT id,phone,username FROM user WHERE id = #{value}
+    SELECT * FROM user WHERE phone = #{value}
   </select>
   <select id="selectOneByUserName" parameterType="String" resultType="user">
-    SELECT id,phone,username FROM user WHERE username = #{value}
+    SELECT * FROM user WHERE username = #{value}
   </select>
 
 </mapper>

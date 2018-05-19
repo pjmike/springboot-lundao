@@ -25,8 +25,16 @@ import java.util.Date;
  */
 @Component
 public class SmsDemo {
-    private static String signName = "稷下社区";
-    private static String templateCode = "SMS_135042063";
+    private static String signName;
+    private static String templateCode;
+    @Value("${aliyun.sms.signName}")
+    public  void setSignName(String signName) {
+        SmsDemo.signName = signName;
+    }
+    @Value("${aliyun.sms.templateCode}")
+    public  void setTemplateCode(String templateCode) {
+        SmsDemo.templateCode = templateCode;
+    }
 
     private static RedisOperator redisOperator;
     @Autowired
@@ -43,7 +51,6 @@ public class SmsDemo {
     static final String ACCESSKEYSECRET = "4tNkrQFkzZR4bhWYQZtmAvXRaK7zYb";
 
     public static SendSmsResponse sendSms(String phone) throws ClientException {
-        System.out.println(signName);
         int randCode = (int) ((Math.random() * 9 + 1) * 100000);
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");

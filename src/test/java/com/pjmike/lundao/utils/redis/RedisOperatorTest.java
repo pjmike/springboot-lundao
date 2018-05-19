@@ -11,10 +11,14 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisOperatorTest {
+//    @Autowired
+    private  static RedisOperator redisOperator;
     @Autowired
-    private  RedisOperator redisOperator;
-    //    private static RedisOperator redisOperator = new RedisOperator();
+    public  void setRedisOperator(RedisOperator redisOperator) {
+        RedisOperatorTest.redisOperator = redisOperator;
+    }
 
+    //    private static RedisOperator redisOperator = new RedisOperator();
 
     @Test
     public void redisTest() {
