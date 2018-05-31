@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pjmike.lundao.dao.ThesisMapper">
+  <resultMap id="BaseResultMap" type="com.pjmike.lundao.domain.bo.Thesis">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="thesis_id" jdbcType="INTEGER" property="thesisId" />
+    <result column="debate_id" jdbcType="INTEGER" property="debateId" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <select id="findAllByDebateId" parameterType="Integer" resultMap="BaseResultMap">
+    select * from thesis where debate_id = #{id}
+  </select>
+</mapper>

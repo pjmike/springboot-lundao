@@ -13,10 +13,12 @@ import java.util.List;
  */
 public interface IService<T> {
 
-    default void save(T model) {
+    default T save(T model) {
+        return null;
     }//持久化
 
-    default void save(List<T> models) {
+    default List<T> save(List<T> models) {
+        return null;
     }//批量持久化
 
     default void deleteById(Integer id) {

@@ -1,6 +1,4 @@
-package com.pjmike.lundao.domain;
-
-import com.alibaba.fastjson.JSON;
+package com.pjmike.lundao.domain.bo;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -29,8 +27,12 @@ public class User {
     /**
      * 密码
      */
-    @NotBlank(message = "密码不能为空")
     private String password;
+
+    /**
+     * 性别,0为男，1为女
+     */
+    private Byte gender;
 
     /**
      * 加密的盐
@@ -116,6 +118,24 @@ public class User {
     }
 
     /**
+     * 获取性别,0为男，1为女
+     *
+     * @return gender - 性别,0为男，1为女
+     */
+    public Byte getGender() {
+        return gender;
+    }
+
+    /**
+     * 设置性别,0为男，1为女
+     *
+     * @param gender 性别,0为男，1为女
+     */
+    public void setGender(Byte gender) {
+        this.gender = gender;
+    }
+
+    /**
      * 获取加密的盐
      *
      * @return salt - 加密的盐
@@ -151,8 +171,4 @@ public class User {
         this.createTime = createTime;
     }
 
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
 }

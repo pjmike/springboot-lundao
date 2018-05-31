@@ -1,12 +1,11 @@
-package com.pjmike.lundao.web;
+package com.pjmike.lundao.web.controller;
 
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
-import com.pjmike.lundao.domain.User;
+import com.pjmike.lundao.domain.bo.User;
 import com.pjmike.lundao.domain.vo.Account;
 import com.pjmike.lundao.exception.ServiceException;
 import com.pjmike.lundao.service.AccountService;
-import com.pjmike.lundao.utils.CommonUtil;
 import com.pjmike.lundao.utils.MD5Util;
 import com.pjmike.lundao.utils.Result;
 import com.pjmike.lundao.utils.ResultUtils;

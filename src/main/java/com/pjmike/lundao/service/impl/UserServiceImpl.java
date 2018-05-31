@@ -1,7 +1,7 @@
 package com.pjmike.lundao.service.impl;
 
 import com.pjmike.lundao.dao.UserMapper;
-import com.pjmike.lundao.domain.User;
+import com.pjmike.lundao.domain.bo.User;
 import com.pjmike.lundao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
     @Override
-    public void save(User model) {
+    public User save(User model) {
         userMapper.insert(model);
+        return model;
     }
 
     @Override

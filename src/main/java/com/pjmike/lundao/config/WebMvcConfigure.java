@@ -36,9 +36,9 @@ public class WebMvcConfigure implements WebMvcConfigurer {
                 //暴露哪些头部信息（因为跨域访问默认不能获取全部头部信息）
                 .exposedHeaders("Header1", "Header2");
     }
-
     /**
      * 使用阿里 FastJson 作为JSON MessageConverter
+     * @param converters
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

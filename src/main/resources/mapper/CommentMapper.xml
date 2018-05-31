@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pjmike.lundao.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.pjmike.lundao.domain.Comment">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="from_uid" jdbcType="INTEGER" property="fromUid" />
+    <result column="from_uname" jdbcType="VARCHAR" property="fromUname" />
+    <result column="from_uavatar" jdbcType="VARCHAR" property="fromUavatar" />
+    <result column="to_uid" jdbcType="INTEGER" property="toUid" />
+    <result column="to_uname" jdbcType="VARCHAR" property="toUname" />
+    <result column="to_uavatar" jdbcType="VARCHAR" property="toUavatar" />
+    <result column="thesis_id" jdbcType="INTEGER" property="thesisId" />
+    <result column="favour" jdbcType="INTEGER" property="favour" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="target_id" jdbcType="INTEGER" property="targetId" />
+  </resultMap>
+  </mapper>

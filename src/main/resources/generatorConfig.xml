@@ -29,6 +29,22 @@
 		<!-- 配置mapper对应的java映射 -->
         <javaClientGenerator targetPackage="com.pjmike.lundao.dao" targetProject="src/main/java"
                              type="XMLMAPPER"/>
-        <table tableName="user"/>
+        <!--<table tableName="user">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="debate">-->
+            <!--<generatedKey column="debate_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="thesis">-->
+            <!--<generatedKey column="thesis_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="favour">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="likecount">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="comment">
+        </table>
     </context>
 </generatorConfiguration>

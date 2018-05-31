@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pjmike.lundao.dao.LikeMapper" >
+  <resultMap id="BaseResultMap" type="com.pjmike.lundao.domain.Favour" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <update id="updateLike">
+    update favour f set f.status = #{status} where f.type = #{type} and f.type_id = #{typeId};
+  </update>
+  <select id="selectOneFavour" resultMap="BaseResultMap">
+    select * from favour f where f.type = #{type} and f.type_id = #{typeId} and f.uid = #{uid}
+  </select>
+</mapper>

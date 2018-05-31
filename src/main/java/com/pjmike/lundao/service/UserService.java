@@ -1,6 +1,6 @@
 package com.pjmike.lundao.service;
 
-import com.pjmike.lundao.domain.User;
+import com.pjmike.lundao.domain.bo.User;
 
 /**
  * @author pjmike

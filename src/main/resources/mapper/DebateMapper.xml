@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pjmike.lundao.dao.DebateMapper">
+  <resultMap id="BaseResultMap" type="com.pjmike.lundao.domain.bo.Debate">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="debate_id" jdbcType="INTEGER" property="debateId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+
+  <resultMap id="ResultMapWithThesis" type="com.pjmike.lundao.domain.vo.DebateVo">
+    <id column="debate_id" jdbcType="INTEGER" property="debateId" />
+    <result column="debate_title" jdbcType="VARCHAR" property="title" />
+    <result column="debate_content" jdbcType="VARCHAR" property="content" />
+    <result column="debate_createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <collection property="thesisList" ofType="com.pjmike.lundao.domain.bo.Thesis">
+      <id column="thesis_id" jdbcType="INTEGER" property="thesisId" />
+      <result column="thesis_debate_id" jdbcType="INTEGER" property="debateId" />
+      <result column="thesis_uid" jdbcType="INTEGER" property="uid" />
+      <result column="thesis_title" jdbcType="VARCHAR" property="title" />
+      <result column="thesis_content" jdbcType="VARCHAR" property="content" />
+      <result column="thesis_create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </collection>
+
+  </resultMap>
+  <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+    select * from debate where debate_id = #{id}
+  </select>
+  <select id="selectByIdWithThesis" parameterType="Integer" resultMap="ResultMapWithThesis">
+    select
+    d.debate_id as debate_id,
+    d.title as debate_title,
+    d.content as debate_content,
+    d.create_time as debate_createTime,
+    t.thesis_id as thesis_id,
+    t.debate_id as thesis_debate_id,
+    t.uid as thesis_uid,
+    t.title as thesis_title,
+    t.content as thesis_content,
+    t.create_time as thesis_create_time
+--     d.*,t.*
+    from debate d left join thesis t
+    on t.debate_id = d.debate_id
+    where d.debate_id = #{id}
+  </select>
+</mapper>

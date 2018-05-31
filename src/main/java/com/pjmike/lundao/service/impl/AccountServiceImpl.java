@@ -1,7 +1,7 @@
 package com.pjmike.lundao.service.impl;
 
 import com.pjmike.lundao.dao.UserMapper;
-import com.pjmike.lundao.domain.User;
+import com.pjmike.lundao.domain.bo.User;
 import com.pjmike.lundao.domain.vo.Account;
 import com.pjmike.lundao.service.AccountService;
 import com.pjmike.lundao.utils.BeanCopyUtils;
