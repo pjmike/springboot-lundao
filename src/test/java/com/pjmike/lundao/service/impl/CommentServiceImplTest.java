@@ -24,4 +24,20 @@ public class CommentServiceImplTest {
         System.out.println(comments.get(0));
     }
 
+    @Test
+    public void addComment() {
+        Comment comment = new Comment();
+        comment.setTargetId(1);
+        comment.setFromUid(5);
+        comment.setFromUavatar("http://osvtz719h.bkt.clouddn.com/lADPBbCc1SjLjH_NAwDNAwA_768_768.jpg");
+        comment.setFromUname("pjmike2333");
+        comment.setThesisId(1);
+        comment.setContent("hello");
+        comment.setToUid(1);
+        comment.setToUavatar("http://osvtz719h.bkt.clouddn.com/lADPBbCc1SjLjH_NAwDNAwA_768_768.jpg");
+        comment.setToUname("pjmike");
+        comment = commentService.save(comment);
+        System.out.println(comment);
+    }
+
 }

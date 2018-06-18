@@ -7,5 +7,5 @@ import com.pjmike.lundao.domain.bo.User;
  * @create 2018-05-17 22:05
  */
 public interface UserService extends IService<User> {
-
+    void updateUserPassword(User user);
 }

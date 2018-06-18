@@ -9,7 +9,9 @@ import com.pjmike.lundao.domain.vo.LikeCountComparator;
 import com.pjmike.lundao.domain.vo.MultableInt;
 import com.pjmike.lundao.service.CommentService;
 import com.pjmike.lundao.service.LikeCountSerivce;
+import com.pjmike.lundao.utils.redis.RedisOperator;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -24,6 +26,8 @@ import java.util.*;
 @Slf4j
 public class CommentServiceImpl implements CommentService {
     @Autowired
+    private RedisOperator redisOperator;
+    @Autowired
     private CommentMapper commentMapper;
     @Autowired
     private LikeCountSerivce likeCountSerivce;
@@ -33,14 +37,26 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comment save(Comment model) {
         //计数器
-        MultableInt counter = map.get(model.getThesisId());
+//        MultableInt counter = map.get(model.getThesisId());
+//        if (counter == null) {
+//            MultableInt newCounter = new MultableInt();
+//            map.put(model.getThesisId(), newCounter);
+//            model.setId(newCounter.getCount());
+//        } else {
+//            counter.increment();
+//            log.info("论点 计数器 {} 的 counter +1后的值为 :{}",model.getTargetId(),counter.getCount());
+//            model.setId(counter.getCount());
+//        }
+        //用redis做计数器
+        Object counter = redisOperator.get("counter-" + model.getThesisId());
         if (counter == null) {
-            MultableInt newCounter = new MultableInt();
-            map.put(model.getThesisId(), newCounter);
-            model.setId(newCounter.getCount());
+            redisOperator.incr("counter-" + model.getThesisId(), 1);
+            model.setId(1);
         } else {
-            counter.increment();
-            model.setId(counter.getCount());
+            counter = redisOperator.incr("counter-" + model.getThesisId(), 1);
+            log.info("论点计数器 {} 的counter值 ：{}",model.getThesisId(),counter);
+            counter = redisOperator.get("counter-" + model.getThesisId());
+            model.setId((Integer) counter);
         }
         commentMapper.insert(model);
 
@@ -101,6 +117,7 @@ public class CommentServiceImpl implements CommentService {
             //向右滑或者左滑
             if (commentVo.isLeft() || commentVo.isRight()) {
                 //向右滑
+                log.info("左滑或者右滑");
                 if (commentVo.isRight()) {
                     if (iterator.hasNext()) {
                         likecount = iterator.next();

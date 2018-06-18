@@ -33,7 +33,14 @@ public class User {
      * 性别,0为男，1为女
      */
     private Byte gender;
-
+    /**
+     * 头像
+     */
+    private String avatar;
+    /**
+     * 邮箱
+     */
+    private String email;
     /**
      * 加密的盐
      */
@@ -44,6 +51,16 @@ public class User {
      */
     @Column(name = "create_time")
     private Date createTime;
+
+    public User(Integer id, @NotBlank(message = "手机号不能为空") @Pattern(regexp = "^1(3|4|5|7|8)\\d{9}$", message = "手机号码格式错误") String phone, Byte gender, String email) {
+        this.id = id;
+        this.phone = phone;
+        this.gender = gender;
+        this.email = email;
+    }
+
+    public User() {
+    }
 
     /**
      * 获取主键
@@ -171,4 +188,19 @@ public class User {
         this.createTime = createTime;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

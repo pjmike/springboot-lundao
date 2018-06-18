@@ -7,6 +7,7 @@ import com.pjmike.lundao.service.AccountService;
 import com.pjmike.lundao.utils.BeanCopyUtils;
 import com.pjmike.lundao.utils.CommonUtil;
 import com.pjmike.lundao.utils.MD5Util;
+import com.pjmike.lundao.utils.constants.Constants;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,8 @@ public class AccountServiceImpl implements AccountService {
         //将account里的username,password,phone属性拷贝到user
         BeanUtils.copyProperties(account,user,BeanCopyUtils.getNullPropertyNames(account));
         user.setSalt(salt);
+        //设置默认头像
+        user.setAvatar(Constants.DEFAULT_AVATAR_URL);
         return userMapper.insert(user) == 1 ? Boolean.TRUE : Boolean.FALSE;
     }
 }

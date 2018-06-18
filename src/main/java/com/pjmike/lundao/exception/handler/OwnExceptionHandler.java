@@ -1,6 +1,7 @@
 package com.pjmike.lundao.exception.handler;
 
 import com.aliyuncs.exceptions.ClientException;
+import com.pjmike.lundao.exception.ObjectException;
 import com.pjmike.lundao.exception.ServiceException;
 import com.pjmike.lundao.utils.Result;
 import com.pjmike.lundao.utils.ResultCode;
@@ -59,7 +60,6 @@ public class OwnExceptionHandler {
      * @return
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result handlerValidaException(MethodArgumentNotValidException ex) {
         logger.info("validation error :{}", getErrors(ex.getBindingResult()));
         return ResultUtils.error(getErrors(ex.getBindingResult()));
@@ -86,5 +86,11 @@ public class OwnExceptionHandler {
     public Result SmsExceptionHandler(ClientException x) {
         logger.info("sms send error : {}",x.getMessage());
         return ResultUtils.error("短信通道异常");
+    }
+
+    @ExceptionHandler(ObjectException.class)
+    public Result objectExceptionHandler(ObjectException x) {
+        logger.info("object exception : {}", x.getMessage());
+        return ResultUtils.error(x.getMessage());
     }
 }

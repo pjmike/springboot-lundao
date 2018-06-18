@@ -6,6 +6,7 @@ import com.pjmike.lundao.domain.bo.User;
 import com.pjmike.lundao.domain.vo.Account;
 import com.pjmike.lundao.exception.ServiceException;
 import com.pjmike.lundao.service.AccountService;
+import com.pjmike.lundao.service.UserService;
 import com.pjmike.lundao.utils.MD5Util;
 import com.pjmike.lundao.utils.Result;
 import com.pjmike.lundao.utils.ResultUtils;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
-
+import java.util.*;
 /**
  * 注册和登录操作
  *
@@ -34,6 +35,8 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private RedisOperator redisOperator;
     /**
      * 注册
@@ -43,11 +46,11 @@ public class AccountController {
      */
     @PostMapping("/sign_up")
     public Result accountRegister(@Validated({Account.group1.class}) @RequestBody Account account) {
-        String codeValue = redisOperator.get(account.getPhone());
+        Object codeValue = redisOperator.get(account.getPhone());
         if (codeValue == null) {
             return ResultUtils.error("验证码无效或已过期，请重新发送验证码");
         }
-        if (!Objects.equals(codeValue, account.getCode())) {
+        if (!Objects.equals(String.valueOf(codeValue), account.getCode())) {
             return ResultUtils.error("验证码无效或已过期，请重新发送验证码");
         }
         if (accountService.isAccountExistByUserName(account.getUsername())) {
@@ -87,7 +90,7 @@ public class AccountController {
         return ResultUtils.success(user);
     }
 
-    @PostMapping("/authCode")
+    @PostMapping("/code")
     public Result sendAuthCode(@RequestBody @Validated({Account.group2.class})Account account) throws ClientException {
         System.out.println(account.getPhone());
         SendSmsResponse smsResponse = SmsDemo.sendSms(account.getPhone());
@@ -107,4 +110,30 @@ public class AccountController {
     public String index() {
         return "index";
     }
+
+    /**
+     * 修改密码
+     *
+     * @param map
+     * @return
+     */
+    @PostMapping("/change")
+    public Result changePassword(@RequestBody Map<String, Object> map) {
+        String phone = (String) map.get("phone");
+        String password = (String) map.get("password");
+        String code = (String) map.get("code");
+        Object codeValue = redisOperator.get(phone);
+        if (codeValue == null) {
+            return ResultUtils.error("验证码无效或已过期，请重新发送验证码");
+        }
+        if (!Objects.equals(String.valueOf(codeValue), code)) {
+            return ResultUtils.error("验证码无效或已过期，请重新发送验证码");
+        }
+        User user = new User();
+        user.setPhone(phone);
+        user.setPassword(password);
+        userService.updateUserPassword(user);
+        return ResultUtils.success();
+    }
+
 }

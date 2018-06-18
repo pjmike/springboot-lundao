@@ -10,4 +10,7 @@ import java.util.List;
  */
 public interface ThesisSevice extends IService<Thesis> {
     List<Thesis> findAllByDebateId(Integer id);
+
+    List<Thesis> findThesisByPageAndSize(Integer page,Integer size,Integer debateId);
+
 }

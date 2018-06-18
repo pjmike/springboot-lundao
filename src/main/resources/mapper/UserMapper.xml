@@ -10,7 +10,9 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
 
@@ -23,5 +25,4 @@
   <select id="selectOneByUserName" parameterType="String" resultType="user">
     SELECT * FROM user WHERE username = #{value}
   </select>
-
 </mapper>

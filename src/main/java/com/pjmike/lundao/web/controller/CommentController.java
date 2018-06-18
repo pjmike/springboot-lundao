@@ -28,12 +28,12 @@ public class CommentController {
     public Result insertComments(@RequestBody Comment comment) {
         comment = commentService.save(comment);
         return ResultUtils.success(comment);
-    }
+   }
 
     @PostMapping("/comments/list")
     public Result getFinalComments(@RequestBody CommentVo commentVo) {
         List<Comment> comments = commentService.getFinalComments(commentVo);
         return ResultUtils.success(comments);
     }
-    
 }
+

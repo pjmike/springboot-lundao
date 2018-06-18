@@ -1,5 +1,7 @@
 package com.pjmike.lundao.domain.bo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -21,11 +23,16 @@ public class Debate {
      * 详情
      */
     private String content;
+    /**
+     * 图片
+     */
+    private String image;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
+
     private Date createTime;
 
     /**
@@ -100,12 +107,21 @@ public class Debate {
         this.createTime = createTime;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Debate{" +
                 "debateId=" + debateId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", image='" + image + '\'' +
                 ", createTime=" + createTime +
                 '}';
     }

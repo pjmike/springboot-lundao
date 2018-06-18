@@ -12,6 +12,7 @@ import java.util.List;
 public interface DebateService extends IService<Debate> {
     List<Debate> findAllByPageAndSize(Integer page, Integer size);
 
-    DebateVo findDebateWithThesisById(Integer debateId);
+    DebateVo findWithThesisIdAndWithoutUser(Integer debateId);
 
+    DebateVo findWithThesisId(Integer userId,Integer debateId);
 }

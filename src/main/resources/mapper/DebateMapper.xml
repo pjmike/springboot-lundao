@@ -16,13 +16,15 @@
     <id column="debate_id" jdbcType="INTEGER" property="debateId" />
     <result column="debate_title" jdbcType="VARCHAR" property="title" />
     <result column="debate_content" jdbcType="VARCHAR" property="content" />
+    <result column="debate_image" jdbcType="VARCHAR" property="image"/>
     <result column="debate_createTime" jdbcType="TIMESTAMP" property="createTime" />
-    <collection property="thesisList" ofType="com.pjmike.lundao.domain.bo.Thesis">
+    <collection property="thesisList" ofType="com.pjmike.lundao.domain.vo.ThesisVo">
       <id column="thesis_id" jdbcType="INTEGER" property="thesisId" />
       <result column="thesis_debate_id" jdbcType="INTEGER" property="debateId" />
       <result column="thesis_uid" jdbcType="INTEGER" property="uid" />
       <result column="thesis_title" jdbcType="VARCHAR" property="title" />
       <result column="thesis_content" jdbcType="VARCHAR" property="content" />
+      <result column="thesis_favour" jdbcType="INTEGER" property="favour"/>
       <result column="thesis_create_time" jdbcType="TIMESTAMP" property="createTime" />
     </collection>
 
@@ -36,11 +38,13 @@
     d.title as debate_title,
     d.content as debate_content,
     d.create_time as debate_createTime,
+    d.image as debate_image,
     t.thesis_id as thesis_id,
     t.debate_id as thesis_debate_id,
     t.uid as thesis_uid,
     t.title as thesis_title,
     t.content as thesis_content,
+    t.favour as thesis_favour,
     t.create_time as thesis_create_time
 --     d.*,t.*
     from debate d left join thesis t

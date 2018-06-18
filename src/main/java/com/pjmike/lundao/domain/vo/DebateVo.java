@@ -13,13 +13,13 @@ import java.util.List;
  * @create 2018-05-23 17:09
  */
 public class DebateVo extends Debate {
-    List<Thesis> thesisList;
+    List<ThesisVo> thesisList;
 
-    public List<Thesis> getThesisList() {
+    public List<ThesisVo> getThesisList() {
         return thesisList;
     }
 
-    public void setThesisList(List<Thesis> thesisList) {
+    public void setThesisList(List<ThesisVo> thesisList) {
         this.thesisList = thesisList;
     }
 

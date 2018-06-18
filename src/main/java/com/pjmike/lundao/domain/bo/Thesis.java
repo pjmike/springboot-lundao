@@ -1,6 +1,5 @@
 package com.pjmike.lundao.domain.bo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -35,6 +34,10 @@ public class Thesis {
      */
     private String content;
 
+    /**
+     * 完善值/点赞数
+     */
+    private Integer favour;
     /**
      * 创建时间
      */
@@ -149,6 +152,14 @@ public class Thesis {
         this.createTime = createTime;
     }
 
+    public Integer getFavour() {
+        return favour;
+    }
+
+    public void setFavour(Integer favour) {
+        this.favour = favour;
+    }
+
     @Override
     public String toString() {
         return "Thesis{" +
@@ -157,6 +168,7 @@ public class Thesis {
                 ", uid=" + uid +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", favour=" + favour +
                 ", createTime=" + createTime +
                 '}';
     }

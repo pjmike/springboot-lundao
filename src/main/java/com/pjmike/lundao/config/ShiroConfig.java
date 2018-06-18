@@ -32,6 +32,8 @@ public class ShiroConfig {
         filterChainDefinition.put("/logout", "logout");
         filterChainDefinition.put("/sign_in", "anon");
         filterChainDefinition.put("/sign_up", "anon");
+        filterChainDefinition.put("/user/*", "authc");
+        filterChainDefinition.put("/favour", "authc");
         filterChainDefinition.put("/index", "authc");
         //如果不设置默认会自动寻找web工程根目录下的login.jsp
 //        shiroFilterFactoryBean.setLoginUrl("/unAuthorized");
@@ -67,6 +69,4 @@ public class ShiroConfig {
         hashedCredentialsMatcher.setHashIterations(2);
         return hashedCredentialsMatcher;
     }
-
-
 }

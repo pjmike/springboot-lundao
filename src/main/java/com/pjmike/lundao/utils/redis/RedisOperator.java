@@ -46,7 +46,7 @@ public class RedisOperator {
 	 * @param key
 	 * @return
 	 */
-	public long incr(String key, long delta) {
+	public Long incr(String key, long delta) {
 		return redisTemplate.opsForValue().increment(key, delta);
 	}
 
@@ -95,8 +95,8 @@ public class RedisOperator {
 	 * @param key
 	 * @return value
 	 */
-	public String get(String key) {
-		return (String)redisTemplate.opsForValue().get(key);
+	public Object get(String key) {
+		return redisTemplate.opsForValue().get(key);
 	}
 
 
