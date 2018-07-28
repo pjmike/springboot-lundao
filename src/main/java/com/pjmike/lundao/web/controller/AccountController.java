@@ -76,6 +76,7 @@ public class AccountController {
             throw new ServiceException("手机号不存在,请重新注册");
         }
         String pwd = MD5Util.getMD5(account.getPassword(), user.getSalt());
+        log.info("user salt :{}",user.getSalt());
         if (!StringUtils.equals(pwd,user.getPassword())) {
             throw new ServiceException("密码错误,请重新输入");
         }
@@ -122,6 +123,7 @@ public class AccountController {
         String phone = (String) map.get("phone");
         String password = (String) map.get("password");
         String code = (String) map.get("code");
+        Integer userId = (Integer) map.get("id");
         Object codeValue = redisOperator.get(phone);
         if (codeValue == null) {
             return ResultUtils.error("验证码无效或已过期，请重新发送验证码");
@@ -130,8 +132,8 @@ public class AccountController {
             return ResultUtils.error("验证码无效或已过期，请重新发送验证码");
         }
         User user = new User();
-        user.setPhone(phone);
         user.setPassword(password);
+        user.setId(userId);
         userService.updateUserPassword(user);
         return ResultUtils.success();
     }

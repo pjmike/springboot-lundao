@@ -118,8 +118,8 @@ public class RedisOperator {
 	 * @param field
 	 * @return
 	 */
-	public String hget(String key, String field) {
-		return (String) redisTemplate.opsForHash().get(key, field);
+	public Object hget(String key, String field) {
+		return redisTemplate.opsForHash().get(key, field);
 	}
 
 	/**

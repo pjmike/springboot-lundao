@@ -15,4 +15,8 @@ public class Constants {
      * 默认条数
      */
     public static final Integer SIZE = 10;
+    /**
+     * hash的key
+     */
+    public static final String COMMET_HASH_SET = "comment";
 }

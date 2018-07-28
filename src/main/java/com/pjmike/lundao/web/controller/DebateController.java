@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
-
+import java.util.*;
 /**
  * 辩题
  *
@@ -47,7 +46,11 @@ public class DebateController {
             page = 1;
         }
         List<Debate> debates = debateService.findAllByPageAndSize(page, Constants.SIZE);
-        return ResultUtils.success(debates);
+        List<Debate> debateTotals = debateService.findAll();
+        Map<String, Object> map = new HashMap<>();
+        map.put("count", debateTotals.size());
+        map.put("debates", debates);
+        return ResultUtils.success(map);
     }
 
     /**

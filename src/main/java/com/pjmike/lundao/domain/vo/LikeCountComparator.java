@@ -1,5 +1,6 @@
 package com.pjmike.lundao.domain.vo;
 
+import com.pjmike.lundao.domain.Comment;
 import com.pjmike.lundao.domain.Likecount;
 
 import java.util.Comparator;
@@ -10,10 +11,10 @@ import java.util.Comparator;
  * @author pjmike
  * @create 2018-05-31 14:32
  */
-public class LikeCountComparator implements Comparator<Likecount> {
+public class LikeCountComparator implements Comparator<Comment> {
 
     @Override
-    public int compare(Likecount o1, Likecount o2) {
-        return o1.getCount() < o2.getCount() ? 1 : (o1.getCount().equals(o2.getCount()) ? 0 : -1);
+    public int compare(Comment o1, Comment o2) {
+        return o1.getFavour() < o2.getFavour() ? 1 : (o1.getFavour().equals(o2.getFavour()) ? 0 : -1);
     }
 }

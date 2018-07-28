@@ -24,4 +24,7 @@ public interface CommentService extends IService<Comment>{
      * @return
      */
     List<Comment> getFinalComments(CommentVo commentVo);
+
+
+    List<Comment> getCommentForThesis(Integer thesisId);
 }

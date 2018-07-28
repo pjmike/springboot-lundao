@@ -1,6 +1,8 @@
 package com.pjmike.lundao.domain;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Comment {
     @Id
@@ -63,7 +65,15 @@ public class Comment {
      */
     @Column(name = "target_id")
     private Integer targetId;
+    @Column(name = "create_time")
+    private Date createTime;
+    public Date getCreateTime() {
+        return createTime;
+    }
 
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
     /**
      * @return id
      */
@@ -149,7 +159,6 @@ public class Comment {
     public void setToUid(Integer toUid) {
         this.toUid = toUid;
     }
-
     /**
      * 获取目标人姓名
      *
@@ -272,6 +281,7 @@ public class Comment {
                 ", favour=" + favour +
                 ", content='" + content + '\'' +
                 ", targetId=" + targetId +
+                ", createTime=" + createTime +
                 '}';
     }
 }

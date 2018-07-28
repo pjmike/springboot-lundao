@@ -26,7 +26,7 @@ public class Test2 {
         likecountList.add(likecount5);
         likecountList.add(likecount6);
         LinkedList<Likecount> linkedList = new LinkedList<>(likecountList);
-        Collections.sort(linkedList, new LikeCountComparator());
+//        Collections.sort(linkedList, new LikeCountComparator());
         System.out.println(linkedList);
         Iterator<Likecount> likecountIterator = linkedList.listIterator();
         if (likecountIterator.hasNext()) {
